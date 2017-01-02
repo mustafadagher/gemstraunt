@@ -18,3 +18,10 @@ add_item() {
          -d @bin/add_item.json ^
          http://localhost:3000/tables/1/orders/1/add
 }
+
+pay_order() {
+    curl -X POST ^
+             -H "Content-Type: application/json" ^
+             -d @bin/pay_order.json ^
+             http://localhost:3000/tables/1/orders/1/pay
+}
