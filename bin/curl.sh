@@ -25,3 +25,7 @@ pay_order() {
              -d @bin/pay_order.json ^
              http://localhost:3000/tables/1/orders/1/pay
 }
+
+stats() {
+    curl http://localhost:3000/stats
+}

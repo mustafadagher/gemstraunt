@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'stats', to: "stats#index" #/stats
+
   resources :orders, only: [ :index ] #/orders
   resources :tables do
     resources :orders, only: [ :create ] do #/tables/:id/orders

@@ -43,7 +43,8 @@ class OrdersController < ApplicationController
         render json: @receipt.errors, status: :unprocessable_entity
       end
     else
-      render json: {"message": "You didn't pay for the exact amount: #{@order.total_amount}."}, status: :unprocessable_entity
+      receipt_errors = {message: "You didn't pay for the exact amount: #{@order.total_amount}."}
+      render json: receipt_errors, status: :unprocessable_entity
     end
   end
 
