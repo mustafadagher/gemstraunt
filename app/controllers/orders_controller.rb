@@ -33,18 +33,13 @@ class OrdersController < ApplicationController
 
   def pay
     @order = Order.find(params[:id])
+    service = OrderPayer.new(@order)
+    service.pay params[:amount].to_i, params[:payment_method]
 
-    if @order.total_amount == params[:amount].to_i
-      @receipt = Receipt.new(order: @order, payment_method: params[:payment_method])
-
-      if @receipt.save
-        render json: @receipt, root: true, status: :created
-      else
-        render json: @receipt.errors, status: :unprocessable_entity
-      end
+    if service.ok?
+      render json: service.receipt, root: true, status: :created
     else
-      receipt_errors = {message: "You didn't pay for the exact amount: #{@order.total_amount}."}
-      render json: receipt_errors, status: :unprocessable_entity
+      render json: service.message, status: :unprocessable_entity
     end
   end
 
