@@ -34,11 +34,11 @@ class OrdersController < ApplicationController
   def pay
     @order = Order.find(params[:id])
 
-    if @order.total_amount == params[:amount]
+    if @order.total_amount == params[:amount].to_i
       @receipt = Receipt.new(order: @order, payment_method: params[:payment_method])
 
       if @receipt.save
-        render json: @receipt, status: :no_content
+        render json: @receipt, root: true, status: :created
       else
         render json: @receipt.errors, status: :unprocessable_entity
       end
